@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курс</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/student.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #a5b4fc;
+            --secondary: #10b981;
+            --accent: #8b5cf6;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-light: #f8fafc;
+            --surface: #ffffff;
+            --surface-light: #f8fafc;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --text-lighter: #94a3b8;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Хедер */
+        .header {
+            background: var(--surface);
+            padding: 0;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            max-width: 100%;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-1px);
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        #logout-link {
+            color: var(--text-light);
+            font-weight: 500;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border);
+        }
+
+        #logout-link:hover {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.08);
+            border-color: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        /* Основной контент */
+        main {
+            padding: 40px 0;
+            min-height: calc(100vh - 80px);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Заголовок курса */
+        .course-header {
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--primary-light);
+            transform: translateX(-4px);
+            text-decoration: none;
+        }
+
+        .back-link i {
+            font-size: 16px;
+        }
+
+        .course-title-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .course-title-wrapper {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        #course-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .course-subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .course-meta-badges {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .meta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.08);
+            border-radius: var(--radius-md);
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 14px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .meta-badge i {
+            font-size: 16px;
+        }
+
+        .course-stats {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            min-width: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .stat-label i {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text);
+        }
+
+        /* Вкладки */
+        .course-tabs-container {
+            margin: 32px 0;
+            position: relative;
+        }
+
+        .course-tabs {
+            display: inline-flex;
+            background: rgba(99, 102, 241, 0.08);
+            border-radius: var(--radius-lg);
+            padding: 8px;
+            gap: 4px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tab-btn {
+            padding: 14px 32px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .tab-btn.active {
+            background: var(--surface);
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 2px;
+        }
+
+        .tab-btn i {
+            font-size: 18px;
+        }
+
+        /* Контент вкладок */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Контент курса */
+        .lectures-section {
+            margin-top: 32px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .lectures-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .lecture-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lecture-card:hover {
+            transform: translateX(8px);
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-md);
+        }
+
+        .lecture-card.disabled {
+            opacity: 0.7;
+            background: var(--surface-light);
+        }
+
+        .lecture-card.disabled:hover {
+            transform: none;
+            border-color: var(--border);
+        }
+
+        .lecture-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .lecture-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .lecture-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .lecture-title a:hover {
+            color: var(--primary);
+        }
+
+        .lecture-meta {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .lecture-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .lecture-status {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-completed {
+            background: rgba(16, 185, 129, 0.1);
+            color: #047857;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .status-available {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-dark);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .status-locked {
+            background: rgba(148, 163, 184, 0.1);
+            color: var(--text-lighter);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .lecture-content {
+            margin: 16px 0;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .lecture-content p {
+            margin-bottom: 12px;
+        }
+
+        .lecture-files {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .file-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--surface-light);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+            min-width: 200px;
+        }
+
+        .file-card:hover {
+            background: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .file-icon.pdf { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        .file-icon.doc { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+        .file-icon.ppt { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .file-icon.zip { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+        .file-icon.default { background: linear-gradient(135deg, #64748b 0%, #475569 100%); }
+
+        .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-size {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .lecture-tasks {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .tasks-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: var(--surface-light);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .task-item:hover {
+            background: white;
+            border-color: var(--primary-light);
+            transform: translateX(4px);
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-name {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+            display: block;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .task-name:hover {
+            color: var(--primary);
+        }
+
+        .task-deadline {
+            font-size: 13px;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .task-status {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .status-not-submitted {
+            background: rgba(239, 68, 68, 0.1);
+            color: #b91c1c;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .status-submitted {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-dark);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .status-graded {
+            background: rgba(16, 185, 129, 0.1);
+            color: #047857;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        /* Прогресс курса */
+        .progress-overview {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-overview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .progress-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .overall-progress {
+            text-align: right;
+            min-width: 200px;
+        }
+
+        .progress-percent {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-size: 16px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .progress-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .progress-metric {
+            text-align: center;
+            padding: 20px;
+            background: var(--surface-light);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .progress-metric:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .answers-section {
+            margin-top: 40px;
+        }
+
+        .answers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .answer-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .answer-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .answer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .answer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .answer-task {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .answer-task h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .answer-task h4 a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .answer-task h4 a:hover {
+            color: var(--primary);
+        }
+
+        .answer-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+            color: var(--text-light);
+            flex-wrap: wrap;
+        }
+
+        .answer-score {
+            text-align: right;
+            min-width: 120px;
+        }
+
+        .score-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .score-max {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .answer-content {
+            margin: 20px 0;
+            padding: 20px;
+            background: var(--surface-light);
+            border-radius: var(--radius-md);
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .teacher-comment {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--primary);
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .comment-header i {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .comment-header h5 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .comment-content {
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        /* Состояния загрузки */
+        .loading {
+            padding: 80px;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+            color: #b91c1c;
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            margin: 20px 0;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error i {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .course-title-section {
+                flex-direction: column;
+            }
+
+            .course-stats {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .header .container {
+                padding: 12px 16px;
+            }
+
+            #course-title {
+                font-size: 28px;
+            }
+
+            .course-tabs {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .tab-btn {
+                padding: 12px 20px;
+                flex: 1;
+                justify-content: center;
+            }
+
+            .lecture-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .answer-header {
+                flex-direction: column;
+            }
+
+            .answer-score {
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #course-title {
+                font-size: 24px;
+            }
+
+            .back-link {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .course-tabs {
+                flex-direction: column;
+            }
+
+            .progress-details {
+                grid-template-columns: 1fr;
+            }
+
+            .file-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <a href="/courses" class="logo" id="user-name">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Студент</span>
+        </a>
+        <a href="/login" id="logout-link" style="display: none;">
+            <i class="fas fa-sign-out-alt"></i>
+            Выйти
+        </a>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <!-- Заголовок курса -->
+        <div class="course-header">
+            <a href="/courses" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Назад к курсам
+            </a>
+
+            <div class="course-title-section">
+                <div class="course-title-wrapper">
+                    <h1 id="course-title">Загрузка курса...</h1>
+                    <div id="course-subtitle" class="course-subtitle"></div>
+
+                    <div class="course-meta-badges" id="course-meta-badges">
+                        <!-- Бейджи будут заполнены динамически -->
+                    </div>
+                </div>
+
+                <div class="course-stats" id="course-stats" style="display: none;">
+                    <!-- Статистика будет заполнена динамически -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладки -->
+        <div class="course-tabs-container">
+            <div class="course-tabs">
+                <button class="tab-btn active" data-tab="content">
+                    <i class="fas fa-book-open"></i>
+                    Содержание
+                </button>
+                <button class="tab-btn" data-tab="progress">
+                    <i class="fas fa-chart-line"></i>
+                    Прогресс
+                </button>
+            </div>
+        </div>
+
+        <!-- Состояние загрузки -->
+        <div id="course-loading" class="loading">
+            <div class="loading-spinner"></div>
+            <div>Загружаем информацию о курсе...</div>
+        </div>
+
+        <!-- Сообщение об ошибке -->
+        <div id="course-error" class="error" style="display: none;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="error-content">
+                <div class="error-title">Ошибка загрузки</div>
+                <div class="error-message" id="error-message"></div>
+            </div>
+        </div>
+
+        <!-- Вкладка "Содержание" -->
+        <div id="tab-content" class="tab-content active">
+            <div id="course-content"></div>
+        </div>
+
+        <!-- Вкладка "Прогресс" -->
+        <div id="tab-progress" class="tab-content" style="display: none;">
+            <div id="course-progress"></div>
+        </div>
+    </div>
+</main>
+
+<script src="/js/api.js"></script>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseId = parseInt(urlParams.get('id')) || 0;
+
+    // Инициализация вкладок
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+
+                // Убираем активный класс у всех кнопок
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                // Добавляем активный класс текущей кнопке
+                this.classList.add('active');
+
+                // Скрываем все вкладки
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                    content.style.display = 'none';
+                });
+
+                // Показываем выбранную вкладку
+                const tabContent = document.getElementById(`tab-${tabId}`);
+                if (tabContent) {
+                    tabContent.style.display = 'block';
+                    setTimeout(() => {
+                        tabContent.classList.add('active');
+                    }, 10);
+                }
+            });
+        });
+
+        // Проверка авторизации
+        checkAuth();
+    });
+
+    async function checkAuth() {
+        try {
+            const user = await api.getUser();
+            if (user && !user.error) {
+                // Обновляем имя пользователя
+                const userNameEl = document.getElementById('user-name');
+                if (userNameEl) {
+                    let fullName = '';
+                    if (user.firstName && user.lastName) {
+                        fullName = `${user.firstName} ${user.lastName}`.trim();
+                    } else if (user.firstName) {
+                        fullName = user.firstName;
+                    } else if (user.lastName) {
+                        fullName = user.lastName;
+                    } else if (user.name) {
+                        fullName = user.name;
+                    }
+
+                    if (fullName) {
+                        userNameEl.querySelector('span').textContent = fullName;
+                    }
+                }
+
+                // Показываем кнопку выхода
+                const logoutLink = document.getElementById('logout-link');
+                logoutLink.style.display = 'flex';
+                logoutLink.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    await api.logout();
+                    window.location.href = '/login';
+                });
+            }
+        } catch (error) {
+            console.error('Error checking auth:', error);
+        }
+    }
+</script>
+<script src="/js/course.js"></script>
+</body>
+</html>

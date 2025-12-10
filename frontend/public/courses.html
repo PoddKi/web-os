@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои курсы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/student.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #a5b4fc;
+            --secondary: #10b981;
+            --accent: #8b5cf6;
+            --bg-light: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --text-lighter: #94a3b8;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Улучшенный хедер */
+        .header {
+            background: var(--surface);
+            padding: 0;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            max-width: 100%;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-1px);
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.08);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 15px;
+        }
+
+        #logout-link {
+            color: var(--text-light);
+            font-weight: 500;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border);
+        }
+
+        #logout-link:hover {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.08);
+            border-color: var(--primary-light);
+            transform: translateY(-1px);
+        }
+
+        #logout-link i {
+            font-size: 16px;
+        }
+
+        /* Основной контент */
+        main {
+            padding: 40px 0;
+            min-height: calc(100vh - 80px);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Заголовок страницы */
+        .page-header {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .page-subtitle {
+            font-size: 18px;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-subtitle i {
+            color: var(--primary);
+        }
+
+        /* Статистика курсов */
+        .courses-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .stat-icon.courses {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+
+        .stat-icon.active {
+            background: linear-gradient(135deg, var(--secondary) 0%, #0da271 100%);
+        }
+
+        .stat-icon.progress {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Сетка курсов */
+        .courses-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .course-card {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+
+        .course-header {
+            padding: 28px 28px 20px;
+            position: relative;
+            flex: 1;
+        }
+
+        .course-category {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 6px 14px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .course-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text);
+            line-height: 1.3;
+        }
+
+        .course-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .course-title a:hover {
+            color: var(--primary);
+        }
+
+        .course-description {
+            color: var(--text-light);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .course-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+            font-size: 14px;
+            color: var(--text-lighter);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meta-item i {
+            width: 20px;
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .course-progress {
+            margin: 20px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .progress-percent {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border-light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 4px;
+            transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .course-footer {
+            padding: 20px 28px;
+            background: var(--border-light);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-badge.active {
+            background: rgba(16, 185, 129, 0.1);
+            color: #047857;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .status-badge.upcoming {
+            background: rgba(245, 158, 11, 0.1);
+            color: #92400e;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .status-badge.completed {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-dark);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-course {
+            padding: 10px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-course:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-course i {
+            font-size: 14px;
+        }
+
+        /* Состояния загрузки и ошибок */
+        .loading {
+            padding: 80px;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+            color: #b91c1c;
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            margin: 20px 0;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error i {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .error-content {
+            flex: 1;
+        }
+
+        .error-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .error-message {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Пустой список */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 40px;
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            border: 2px dashed var(--border);
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            color: var(--border);
+            margin-bottom: 24px;
+        }
+
+        .empty-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .empty-description {
+            color: var(--text-lighter);
+            max-width: 400px;
+            margin: 0 auto 24px;
+            line-height: 1.6;
+        }
+
+        /* Анимация появления карточек */
+        .course-card {
+            animation: cardAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .course-card:nth-child(1) { animation-delay: 0.1s; }
+        .course-card:nth-child(2) { animation-delay: 0.2s; }
+        .course-card:nth-child(3) { animation-delay: 0.3s; }
+        .course-card:nth-child(4) { animation-delay: 0.4s; }
+        .course-card:nth-child(5) { animation-delay: 0.5s; }
+        .course-card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* Адаптивность */
+        @media (max-width: 1024px) {
+            .courses-list {
+                grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .header .container {
+                padding: 12px 16px;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .user-menu {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .courses-list {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .courses-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+            .course-card {
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-menu {
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch;
+            }
+
+            .user-info {
+                justify-content: center;
+            }
+
+            .page-header h1 {
+                font-size: 24px;
+            }
+
+            .course-header {
+                padding: 20px;
+            }
+
+            .course-footer {
+                flex-direction: column;
+                gap: 16px;
+                align-items: stretch;
+            }
+
+            .btn-course {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Фильтры курсов (можно добавить позже) */
+        .courses-filters {
+            margin-bottom: 32px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <a href="/courses" class="logo" id="user-name">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Студент</span>
+        </a>
+
+        <div class="user-menu">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">С</div>
+                <div class="user-name" id="user-full-name">Загрузка...</div>
+            </div>
+            <a href="/login" id="logout-link" style="display: none;">
+                <i class="fas fa-sign-out-alt"></i>
+                Выйти
+            </a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <!-- Заголовок страницы -->
+        <div class="page-header">
+            <h1>Мои курсы</h1>
+            <div class="page-subtitle">
+                <i class="fas fa-compass"></i>
+                <span>Изучайте, практикуйтесь, достигайте целей</span>
+            </div>
+        </div>
+
+        <!-- Статистика курсов -->
+        <div class="courses-stats" id="courses-stats" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-icon courses">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="total-courses">0</div>
+                    <div class="stat-label">Всего курсов</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon active">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="active-courses">0</div>
+                    <div class="stat-label">Активных курсов</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon progress">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-value" id="avg-progress">0%</div>
+                    <div class="stat-label">Средний прогресс</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Состояние загрузки -->
+        <div id="courses-loading" class="loading">
+            <div class="loading-spinner"></div>
+            <div>Загружаем ваши курсы...</div>
+        </div>
+
+        <!-- Сообщение об ошибке -->
+        <div id="courses-error" class="error" style="display: none;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="error-content">
+                <div class="error-title" id="error-title">Ошибка загрузки</div>
+                <div class="error-message" id="error-message"></div>
+            </div>
+        </div>
+
+        <!-- Список курсов -->
+        <div id="courses-list" class="courses-list"></div>
+    </div>
+</main>
+
+<script src="/js/api.js"></script>
+<script src="/js/courses.js"></script>
+<script>
+    // Функция для обновления информации о пользователе
+    function updateUserInfo(user) {
+        const userAvatar = document.getElementById('user-avatar');
+        const userName = document.getElementById('user-full-name');
+        const userNameHeader = document.getElementById('user-name');
+
+        if (user) {
+            // Обновляем аватар
+            if (user.firstName) {
+                userAvatar.textContent = user.firstName.charAt(0).toUpperCase();
+            } else if (user.name) {
+                userAvatar.textContent = user.name.charAt(0).toUpperCase();
+            }
+
+            // Обновляем имя
+            let fullName = '';
+            if (user.firstName && user.lastName) {
+                fullName = `${user.firstName} ${user.lastName}`;
+            } else if (user.firstName) {
+                fullName = user.firstName;
+            } else if (user.lastName) {
+                fullName = user.lastName;
+            } else if (user.name) {
+                fullName = user.name;
+            }
+
+            if (fullName) {
+                userName.textContent = fullName;
+                userNameHeader.querySelector('span').textContent = fullName;
+            }
+        }
+    }
+
+    // Функция для обновления статистики
+    function updateStats(courses) {
+        const statsContainer = document.getElementById('courses-stats');
+        const totalCourses = document.getElementById('total-courses');
+        const activeCourses = document.getElementById('active-courses');
+        const avgProgress = document.getElementById('avg-progress');
+
+        if (courses && courses.length > 0) {
+            // Показываем статистику
+            statsContainer.style.display = 'grid';
+
+            // Общее количество курсов
+            totalCourses.textContent = courses.length;
+
+            // Активные курсы (можно добавить логику определения активности)
+            const activeCount = courses.filter(course =>
+                course.status === 'active' || course.status === 'in_progress'
+            ).length;
+            activeCourses.textContent = activeCount;
+
+            // Средний прогресс
+            const totalProgress = courses.reduce((sum, course) => {
+                return sum + (course.progress || 0);
+            }, 0);
+            const average = Math.round(totalProgress / courses.length);
+            avgProgress.textContent = `${average}%`;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const user = await api.getUser();
+            if (user && !user.error) {
+                // Обновляем информацию о пользователе
+                updateUserInfo(user);
+
+                // Показываем кнопку выхода
+                const logoutLink = document.getElementById('logout-link');
+                logoutLink.style.display = 'flex';
+                logoutLink.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    await api.logout();
+                    window.location.href = '/login';
+                });
+            }
+        } catch (error) {
+            console.error('Error loading user:', error);
+        }
+    });
+
+    // Глобальные функции для обновления статистики
+    window.updateStats = updateStats;
+</script>
+</body>
+</html>
